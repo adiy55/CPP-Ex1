@@ -5,10 +5,8 @@
 #include <stdexcept>
 #include <string>
 
-using namespace std;
-
 namespace ariel {
-    string mat(int cols, int rows, char symb1, char symb2);
+    std::string mat(int, int, char, char); // function prototype
 }
 
 #endif //CPP_EX1_MAT_HPP
