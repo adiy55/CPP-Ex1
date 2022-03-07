@@ -22,23 +22,23 @@ using namespace std;
  * Requires std=c++2a.
  */
 string nospaces(string input) {
-	std::erase(input, ' ');
-	std::erase(input, '\t');
-	std::erase(input, '\n');
-	std::erase(input, '\r');
-	return input;
+    std::erase(input, ' ');
+    std::erase(input, '\t');
+    std::erase(input, '\n');
+    std::erase(input, '\r');
+    return input;
 }
 
 
 TEST_CASE("Good input") {
-	CHECK(nospaces(mat(9, 7, '@', '-')) == nospaces("@@@@@@@@@\n
-													 @-------@\n
-													 @-@@@@@-@\n
-													 @-@---@-@\n
-													 @-@@@@@-@\n
-													 @-------@\n
-													 @@@@@@@@@"));
-	/* Add more test here */
+            CHECK(nospaces(mat(9, 7, '@', '-')) == nospaces("@@@@@@@@@\n"
+                                                            "@-------@\n"
+                                                            "@-@@@@@-@\n"
+                                                            "@-@---@-@\n"
+                                                            "@-@@@@@-@\n"
+                                                            "@-------@\n"
+                                                            "@@@@@@@@@"));
+    /* Add more test here */
 }
 
 TEST_CASE("Bad input") {
