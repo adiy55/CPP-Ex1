@@ -100,7 +100,9 @@ TEST_CASE ("Symbol and case-sensitivity") {
 TEST_CASE ("Bad input") {
     // contains even numbers
             CHECK_THROWS(mat(10, 5, '$', '%'));
+
             CHECK_THROWS(mat(7, 20, '$', '%'));
+
             CHECK_THROWS(mat(0, 0, '$', '%'));
 
 }
@@ -108,8 +110,11 @@ TEST_CASE ("Bad input") {
 TEST_CASE ("Negative input size") {
 
             CHECK_THROWS(mat(-5, 0, '$', '%'));
+
             CHECK_THROWS(mat(9, -9, '$', '%'));
+
             CHECK_THROWS(mat(-5, -1, '$', '%'));
+
 }
 
 TEST_CASE ("Invalid characters- newline, tab, null terminator, space") {
