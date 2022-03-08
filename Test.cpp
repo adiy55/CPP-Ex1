@@ -5,9 +5,7 @@ using namespace ariel;
 
 #include <string>
 #include <algorithm>
-#include <limits>
 
-int MAX_INT = std::numeric_limits<int>::max();
 using namespace std;
 
 /**
@@ -31,7 +29,26 @@ TEST_CASE ("Good input") {
                                                             "@-@@@@@-@\n"
                                                             "@-------@\n"
                                                             "@@@@@@@@@"));
-            CHECK(mat(1, 1, '#', '&') == "#"); // checks that first char was taken
+
+            CHECK(nospaces(mat(13, 5, '@', '-')) == nospaces("@@@@@@@@@@@@@\n"
+                                                             "@-----------@\n"
+                                                             "@-@@@@@@@@@-@\n"
+                                                             "@-----------@\n"
+                                                             "@@@@@@@@@@@@@"));
+
+    // given the same symbol
+            CHECK(nospaces(mat(9, 7, '@', '@')) == nospaces("@@@@@@@@@\n"
+                                                            "@@@@@@@@@\n"
+                                                            "@@@@@@@@@\n"
+                                                            "@@@@@@@@@\n"
+                                                            "@@@@@@@@@\n"
+                                                            "@@@@@@@@@\n"
+                                                            "@@@@@@@@@"));
+
+    // single char matrix, should take the first symbol
+            CHECK(mat(1, 1, '#', '&') == "#");
+
+    // square matrix
             CHECK(nospaces(mat(3, 3, '#', '!')) == nospaces("###\n"
                                                             "#!#\n"
                                                             "###"));
@@ -41,38 +58,37 @@ TEST_CASE ("Good input") {
                                                             "*A*\n"
                                                             "*A*\n"
                                                             "***"));
-
+    // switched rows and columns of previous case
             CHECK(nospaces(mat(5, 3, '*', 'A')) == nospaces("*****\n"
                                                             "*AAA*\n"
                                                             "*****"));
 
-
+    // case-sensitive: changed symbol from uppercase to lowercase
             CHECK(nospaces(mat(5, 3, '*', 'A')) != nospaces(mat(5, 3, '*', 'a')));
-    /* Add more test here */
+
+    // same size, using single (but different) chars
+            CHECK(nospaces(mat(5, 5, '$', '$')) != nospaces(mat(5, 5, '*', '*')));
+
 }
 
 TEST_CASE ("Bad input") {
-    CHECK_THROWS(mat(10, 5, '$', '%'));
-    CHECK_THROWS(mat(7, 20, '$', '%'));
-    CHECK_THROWS(mat(0, 0, '$', '%'));
+    // even matrix size
+            CHECK_THROWS(mat(10, 5, '$', '%'));
+            CHECK_THROWS(mat(7, 20, '$', '%'));
+            CHECK_THROWS(mat(0, 0, '$', '%'));
+    // negative matrix size
+            CHECK_THROWS(mat(-5, 0, '$', '%'));
+            CHECK_THROWS(mat(0, -9, '$', '%'));
+            CHECK_THROWS(mat(-5, -1, '$', '%'));
+    // newline, tab, null terminator
+            CHECK_THROWS(mat(3, 5, '\n', '*'));
+            CHECK_THROWS(mat(9, 7, '^', '\r'));
+            CHECK_THROWS(mat(1, 3, '\n', '\t'));
+            CHECK_THROWS(mat(1, 3, '\0', '&'));
+            CHECK_THROWS(mat(3, 19, '5', '\0'));
+    // space character
+            CHECK_THROWS(mat(5, 7, ' ', '7'));
+            CHECK_THROWS(mat(7, 7, '@', ' '));
+            CHECK_THROWS(mat(5, 5, ' ', ' '));
 
-    CHECK_THROWS(mat(0, 0, '$', '%'));
-    CHECK_THROWS(mat(5, 0, '$', '%'));
-    CHECK_THROWS(mat(5, -1, '$', '%'));
-
-    CHECK_THROWS(mat(3, 5, '\n', '*'));
-    CHECK_THROWS(mat(9, 7, '^', '\r'));
-    CHECK_THROWS(mat(1, 3, '\n', '\t'));
-
-    CHECK_THROWS(mat(5, 7, ' ', '7'));
-    CHECK_THROWS(mat(7, 7, '@', ' '));
-    CHECK_THROWS(mat(5, 5, ' ', ' '));
-
-    CHECK_THROWS(mat(MAX_INT, 7, '@', '&')); // todo: check val
-    CHECK_THROWS(mat(15, MAX_INT, '*', '&'));
-    CHECK_THROWS(mat(MAX_INT, MAX_INT, '*', '&'));
-
-    CHECK_THROWS(mat(5, 5, '*', '*')); // todo: ?
-
-    /* Add more test here */
 }
