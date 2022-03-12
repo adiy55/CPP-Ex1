@@ -1,13 +1,34 @@
 #include <vector>
 #include "mat.hpp"
 
-using namespace std;
-
-void checkInput(int cols, int rows, char symb1, char symb2);
-
-string vectorToString(vector <vector<char>> matrix, int rows, int cols);
+using std::string;
+using std::vector;
+using std::invalid_argument;
 
 namespace ariel {
+    // todo: unreachable
+    void checkInput(int cols, int rows, char symb1, char symb2) {
+        if (rows < 1 || cols < 1 || rows % 2 == 0 || cols % 2 == 0) {
+            throw invalid_argument("Invalid integer input!");
+        }
+        if (isspace(symb1) != 0 || isspace(symb2) != 0 || symb1 == '\0' || symb2 == '\0' || isprint(symb1) == 0 ||
+            isprint(symb2) == 0) {
+            throw invalid_argument("Invalid char input!");
+        }
+    }
+
+    string vectorToString(vector <vector<char>> matrix, int rows, int cols) {
+        string res;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                res += matrix[i][j];
+            }
+            if (i < rows - 1) {
+                res += "\n";
+            }
+        }
+        return res;
+    }
 
     string mat(int cols, int rows, char symb1, char symb2) {
         checkInput(cols, rows, symb1, symb2);
@@ -41,26 +62,8 @@ namespace ariel {
                 matrix[i][left_col] = curr_symb;
             }
         }
-        return vectorToString(matrix, rows, cols); //todo: deep copy of matrix?
+        return vectorToString(matrix, rows, cols); // vector is passed by value
     }
+
 }
 
-void checkInput(int cols, int rows, char symb1, char symb2) {
-    if (rows < 0 || cols < 0 || rows % 2 == 0 || cols % 2 == 0 || isspace(symb1) != 0 || isspace(symb2) != 0 ||
-        symb1 == '\0' || symb2 == '\0') {
-        throw std::invalid_argument("invalid input");
-    }
-}
-
-string vectorToString(vector <vector<char>> matrix, int rows, int cols) {
-    string res;
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            res += matrix[i][j];
-        }
-        if (i < rows - 1) {
-            res += "\n";
-        }
-    }
-    return res;
-}
