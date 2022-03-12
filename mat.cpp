@@ -1,21 +1,24 @@
 #include <vector>
-#include <cctype>
 #include "mat.hpp"
 
 using std::string;
 using std::vector;
 using std::invalid_argument;
-using std::min;
 
 namespace ariel {
     // todo: unreachable
     void checkInput(int cols, int rows, char symb1, char symb2) {
-        if (rows < 1 || cols < 1 || rows % 2 == 0 || cols % 2 == 0) {
-            throw invalid_argument("Invalid integer input!");
+        if (rows < 1 || cols < 1) {
+            throw invalid_argument("Dimensions should be positive numbers!");
         }
-        if (isspace(symb1) != 0 || isspace(symb2) != 0 || symb1 == '\0' || symb2 == '\0' || isprint(symb1) == 0 ||
-            isprint(symb2) == 0) {
-            throw invalid_argument("Invalid char input!");
+        if (rows % 2 == 0 || cols % 2 == 0) {
+            throw invalid_argument("Dimensions should be odd numbers!");
+        }
+        if (isspace(symb1) != 0 || isspace(symb2) != 0 || symb1 == '\0' || symb2 == '\0') {
+            throw invalid_argument("Spaces, newlines and null terminators are invalid characters!");
+        }
+        if (isprint(symb1) == 0 || isprint(symb2) == 0) {
+            throw invalid_argument("Characters should be printable!");
         }
     }
 
@@ -54,4 +57,3 @@ namespace ariel {
         return vectorToString(matrix, rows, cols); // vector is passed by value
     }
 }
-
