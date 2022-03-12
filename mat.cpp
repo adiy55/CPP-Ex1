@@ -6,7 +6,9 @@ using std::vector;
 using std::invalid_argument;
 
 namespace ariel {
-    // todo: unreachable
+    /**
+     * Checks if input is valid. Throws exceptions accordingly.
+     */
     void checkInput(int cols, int rows, char symb1, char symb2) {
         if (rows < 1 || cols < 1) {
             throw invalid_argument("Dimensions should be positive numbers!");
@@ -22,6 +24,10 @@ namespace ariel {
         }
     }
 
+    /**
+     * Converts vector matrix to string. Adds a newline to every row except the last.
+     * @return rug pattern as string
+     */
     string vectorToString(vector <vector<char>> matrix, int rows, int cols) {
         string res;
         for (int i = 0; i < rows; ++i) {
