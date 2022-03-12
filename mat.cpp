@@ -1,9 +1,11 @@
 #include <vector>
+#include <cctype>
 #include "mat.hpp"
 
 using std::string;
 using std::vector;
 using std::invalid_argument;
+using std::min;
 
 namespace ariel {
     // todo: unreachable
@@ -33,37 +35,23 @@ namespace ariel {
     string mat(int cols, int rows, char symb1, char symb2) {
         checkInput(cols, rows, symb1, symb2);
         vector <vector<char>> matrix(rows, vector<char>(cols));
-        int left_row = 0;
-        int right_row = rows - 1;
-        int left_col = 0;
-        int right_col = cols - 1;
-        char curr_symb = symb1;
-        while (left_row <= right_row && left_col <= right_col) {
-            for (int i = left_row; i <= right_row; ++i) {
-                matrix[i][left_col] = curr_symb;
-                matrix[i][right_col] = curr_symb;
+        int curr_row = 0;
+        int curr_col = 0;
+        char curr_symbol = symb1;
+        while (curr_row < rows && curr_col < cols) {
+            for (int i = curr_row; i < rows - curr_row; ++i) {
+                matrix[i][curr_col] = curr_symbol;
+                matrix[i][cols - curr_col - 1] = curr_symbol;
             }
-            for (int i = left_col; i < right_col; ++i) {
-                matrix[left_row][i] = curr_symb;
-                matrix[right_row][i] = curr_symb;
+            for (int i = curr_col; i < cols - curr_col; ++i) {
+                matrix[curr_row][i] = curr_symbol;
+                matrix[rows - curr_row - 1][i] = curr_symbol;
             }
-            left_row++;
-            right_row--;
-            left_col++;
-            right_col--;
-            curr_symb = curr_symb == symb1 ? symb2 : symb1;
-        }
-        if (left_row == right_row) {
-            for (int i = left_col; i <= right_col; ++i) {
-                matrix[left_row][i] = curr_symb;
-            }
-        } else if (left_col == right_col) {
-            for (int i = left_row; i <= right_row; ++i) {
-                matrix[i][left_col] = curr_symb;
-            }
+            curr_row += 1;
+            curr_col += 1;
+            curr_symbol = curr_symbol == symb1 ? symb2 : symb1;
         }
         return vectorToString(matrix, rows, cols); // vector is passed by value
     }
-
 }
 
