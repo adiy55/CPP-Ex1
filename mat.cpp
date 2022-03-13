@@ -19,7 +19,7 @@ namespace ariel {
         if (isspace(symb1) != 0 || isspace(symb2) != 0 || symb1 == '\0' || symb2 == '\0') {
             throw invalid_argument("Spaces, newlines and null terminators are invalid characters!");
         }
-        if (isprint(symb1) == 0 || isprint(symb2) == 0) {
+        if (isprint(symb1) == 0 || isprint(symb2) == 0) { // isprint function: https://tinyurl.com/2p9dyfa
             throw invalid_argument("Characters should be printable!");
         }
     }
