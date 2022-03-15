@@ -47,7 +47,7 @@ namespace ariel {
      * Vector: Stores elements in a dynamically allocated array.
      * Elements can be accessed using the operator[] or using at.
      * Both return a reference to the element, but only 'at' checks if the given position is in bounds
-     * (and throws an out of bounds exception if it is not).
+     * (and throws an out of range exception if it is not).
      * For more information: https://www.cplusplus.com/reference/vector/vector/
      */
     string mat(int cols, int rows, char symb1, char symb2) {
