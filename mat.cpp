@@ -32,7 +32,7 @@ namespace ariel {
         string res;
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                res += matrix[i][j];
+                res += matrix.at(i).at(j);
             }
             if (i < rows - 1) {
                 res += "\n";
@@ -41,6 +41,15 @@ namespace ariel {
         return res;
     }
 
+    /**
+     * Main function that creates the rug pattern.
+     *
+     * Vector: Stores elements in a dynamically allocated array.
+     * Elements can be accessed using the operator[] or using at.
+     * Both return a reference to the element, but only 'at' checks if the given position is in bounds
+     * (and throws an out of bounds exception if it is not).
+     * For more information: https://www.cplusplus.com/reference/vector/vector/
+     */
     string mat(int cols, int rows, char symb1, char symb2) {
         checkInput(rows, cols, symb1, symb2);
         vector<vector<char>> matrix(rows, vector<char>(cols));
@@ -49,12 +58,12 @@ namespace ariel {
         char curr_symbol = symb1; // outer ring is always first symbol
         while (curr_row < rows && curr_col < cols) {
             for (int i = curr_row; i < rows - curr_row; ++i) { // fill columns in current layer
-                matrix[i][curr_col] = curr_symbol;
-                matrix[i][cols - curr_col - 1] = curr_symbol;
+                matrix.at(i).at(curr_col) = curr_symbol;
+                matrix.at(i).at(cols - curr_col - 1) = curr_symbol;
             }
             for (int i = curr_col; i < cols - curr_col; ++i) { // fill rows in current layer
-                matrix[curr_row][i] = curr_symbol;
-                matrix[rows - curr_row - 1][i] = curr_symbol;
+                matrix.at(curr_row).at(i) = curr_symbol;
+                matrix.at(rows - curr_row - 1).at(i) = curr_symbol;
             }
             curr_row += 1;
             curr_col += 1;
