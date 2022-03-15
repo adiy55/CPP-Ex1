@@ -1,8 +1,8 @@
 #include "mat.hpp"
 
-void preset(void);
+void preset();
 
-void userInput(void);
+void userInput();
 
 using std::cin;
 using std::cout;
@@ -20,7 +20,7 @@ int main() {
         } else if (mode == 2) {
             userInput();
         } else {
-            cout << "Exiting program\n";
+            cout << "Exiting program...\n";
             return 0;
         }
     }
@@ -41,7 +41,7 @@ void preset() {
     } else if (selection == 3) {
         cout << mat(5, 5, '$', '!') << endl;
     } else {
-        cout << "Invalid selection\n";
+        cout << "Invalid selection!\n";
     }
 }
 
